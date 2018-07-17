@@ -45,15 +45,25 @@ def usr_placeinput(squareList):
                     if iswin != 0:
                         val = input("Would you like to play again y | n" + os.linesep).lower()
                         if val == "y":
+                            print("Resetting..." +  os.linesep)
+                            time.sleep(1.5)
                             squareList = [1, 2, 3, 4, 5, 6, 7, 8, 9]
                             printBoard(squareList)
                             continue
                         elif val == "n":
                             print("Good Bye.")
-                            time.sleep(3)
+                            time.sleep(.5)
+                            print("Exiting...")
+                            time.sleep(1.5)
+                            sys.exit()
                         else:
                             print("Not a valid input")
-                            sys.exit() # change to be decent
+                            time.sleep(.5)
+                            print("Resetting Anyways...")
+                            time.sleep(1)
+                            squareList = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                            printBoard(squareList)
+                            continue
                 elif squareList[place] == "X" or squareList[place] == "O":
                     print("That place is already taken." + os.linesep)
                     printBoard(squares)
@@ -114,5 +124,4 @@ squares = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 while True:
     printBoard(squares)
     placement = usr_placeinput(squares)
-
 
