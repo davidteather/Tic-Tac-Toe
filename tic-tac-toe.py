@@ -79,8 +79,26 @@ def usr_placeinput(squareList):
 
 
 def bot_place(squareList):
+    moveAI = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [2, 1, 0], [5, 4, 3], [8, 7, 6], [0, 3, 6], [1, 4, 7],
+               [2, 5, 8], [8, 5, 2], [7, 4, 1], [6, 3, 0], [2, 4, 6], [0, 4, 8], [8, 4, 0], [6, 4, 2],
+              [0, 6, 3], [1, 7, 4], [2, 8, 5], [0, 2, 1], [3, 5, 4], [6, 8, 7], [0, 8, 4], [2, 6, 4]]
+    for a in moveAI:
+        if len(a) == 3:
+            if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] != "X" \
+                    and squareList[a[2]] != "O":
+                place = a[2]
+                return place
+            elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] != "X" \
+                    and squareList[a[2]] != "O":
+                place = a[2]
+                return place
+    else:
+        place = bot_random(squareList)
+        return place
+
+def bot_random(squareList):
     while True:
-        place = random.randint(0,8)
+        place = random.randint(0, 8)
         if squareList[place] != "X" and squareList[place] != "O":
             return place
         else:
@@ -109,4 +127,5 @@ squares = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 while True:
     printBoard(squares)
     placement = usr_placeinput(squares)
+
 
