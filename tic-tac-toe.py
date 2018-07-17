@@ -88,34 +88,19 @@ def bot_place(squareList):
 
 
 def check_win(squareList):
-    if (squareList[0] == "X" and squareList[1] == "X" and squareList[2] == "X" or
-            squareList[3] == "X" and squareList[4] == "X" and squareList[5] == "X" or
-            squareList[6] == "X" and squareList[7] == "X" and squareList[8] == "X" or
-            squareList[0] == "X" and squareList[3] == "X" and squareList[6] == "X" or
-            squareList[1] == "X" and squareList[4] == "X" and squareList[7] == "X" or
-            squareList[2] == "X" and squareList[5] == "X" and squareList[8] == "X" or
-            squareList[0] == "X" and squareList[4] == "X" and squareList[8] == "X" or
-            squareList[6] == "X" and squareList[4] == "X" and squareList[2] == "X"):
-        print(" " + os.linesep)
-        return 1
-    elif (squareList[0] == "O" and squareList[1] == "O" and squareList[2] == "O" or
-            squareList[3] == "O" and squareList[4] == "O" and squareList[5] == "O" or
-            squareList[6] == "O" and squareList[7] == "O" and squareList[8] == "O" or
-            squareList[0] == "O" and squareList[3] == "O" and squareList[6] == "O" or
-            squareList[1] == "O" and squareList[4] == "O" and squareList[7] == "O" or
-            squareList[2] == "O" and squareList[5] == "O" and squareList[8] == "O" or
-            squareList[0] == "O" and squareList[4] == "O" and squareList[8] == "O" or
-            squareList[6] == "O" and squareList[4] == "O" and squareList[2] == "O"):
-        print(" " + os.linesep)
-        return 2
-    elif (
-        squareList[0] != 1 and squareList[1] != 2 and squareList[2] != 3 and
-        squareList[3] != 4 and squareList[4] != 5 and squareList[5] != 6 and
-        squareList[6] != 7 and squareList[7] != 8 and squareList[8] != 9
-    ):
-        print(" " + os.linesep)
-        print(squareList[0])
-        return 3
+    winconditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [2, 4, 6], [0, 4, 8]]
+    for a in winconditions:
+        if len(a) == 3:
+            if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] == "X":
+                return 1
+            elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] == "O":
+                return 2
+            elif (squareList[0] != 1 and squareList[1] != 2 and squareList[2] != 3 and squareList[3] != 4
+                  and squareList[4] != 5 and squareList[5] != 6 and squareList[6] != 7
+                  and squareList[7] != 8 and squareList[8] != 9):
+                print(" " + os.linesep)
+                print(squareList[0])
+                return 3
     else:
         return 0
 
