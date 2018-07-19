@@ -7,7 +7,6 @@ print("GitHub: https://github.com/davidteather/Tic-Tac-Toe" + os.linesep)
 
 
 def printBoard(squareList):
-
     str(squareList)
     print("     |     |     ")
     print("  " + str(squareList[0]) + "  |  " + str(squareList[1]) + "  |  " + str(squareList[2]) + "  ")
@@ -20,6 +19,76 @@ def printBoard(squareList):
     print("     |     |     ")
     print("  " + str(squareList[6]) + "  |  " + str(squareList[7]) + "  |  " + str(squareList[8]) + "  ")
     print("     |     |     " + os.linesep)
+
+
+def check_win(squareList):
+    winconditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [2, 4, 6], [0, 4, 8]]
+    for a in winconditions:
+        if len(a) == 3:
+            if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] == "X":
+                return 1
+            elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] == "O":
+                return 2
+            elif (squareList[0] != 1 and squareList[1] != 2 and squareList[2] != 3 and squareList[3] != 4
+                  and squareList[4] != 5 and squareList[5] != 6 and squareList[6] != 7
+                  and squareList[7] != 8 and squareList[8] != 9):
+                print(" " + os.linesep)
+                print(squareList[0])
+                return 3
+    else:
+        return 0
+def bot_place(squareList):
+    moveAI = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [2, 1, 0], [5, 4, 3], [8, 7, 6], [0, 3, 6], [1, 4, 7],
+               [2, 5, 8], [8, 5, 2], [7, 4, 1], [6, 3, 0], [2, 4, 6], [0, 4, 8], [8, 4, 0], [6, 4, 2],
+              [0, 6, 3], [1, 7, 4], [2, 8, 5], [0, 2, 1], [3, 5, 4], [6, 8, 7], [0, 8, 4], [2, 6, 4]]
+    for a in moveAI:
+        if len(a) == 3:
+            if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] != "X" \
+                    and squareList[a[2]] != "O":
+                place = a[2]
+                return place
+            elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] != "X" \
+                    and squareList[a[2]] != "O":
+                place = a[2]
+                return place
+    else:
+        place = bot_random(squareList)
+        return place
+
+def bot_random(squareList):
+    while True:
+        place = random.randint(0, 8)
+        if squareList[place] != "X" and squareList[place] != "O":
+            return place
+        else:
+            continue
+
+
+def check_win(squareList):
+    winconditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [2, 4, 6], [0, 4, 8]]
+    for a in winconditions:
+        if len(a) == 3:
+            if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] == "X":
+                return 1
+            elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] == "O":
+                return 2
+            elif (squareList[0] != 1 and squareList[1] != 2 and squareList[2] != 3 and squareList[3] != 4
+                  and squareList[4] != 5 and squareList[5] != 6 and squareList[6] != 7
+                  and squareList[7] != 8 and squareList[8] != 9):
+                print(" " + os.linesep)
+                print(squareList[0])
+                return 3
+    else:
+        return 0
+
+
+def bot_random(squareList):
+    while True:
+        place = random.randint(0, 8)
+        if squareList[place] != "X" and squareList[place] != "O":
+            return place
+        else:
+            continue
 
 
 def usr_placeinput(squareList):
@@ -76,51 +145,6 @@ def usr_placeinput(squareList):
             continue
         else:
             continue
-
-
-def bot_place(squareList):
-    moveAI = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [2, 1, 0], [5, 4, 3], [8, 7, 6], [0, 3, 6], [1, 4, 7],
-               [2, 5, 8], [8, 5, 2], [7, 4, 1], [6, 3, 0], [2, 4, 6], [0, 4, 8], [8, 4, 0], [6, 4, 2],
-              [0, 6, 3], [1, 7, 4], [2, 8, 5], [0, 2, 1], [3, 5, 4], [6, 8, 7], [0, 8, 4], [2, 6, 4]]
-    for a in moveAI:
-        if len(a) == 3:
-            if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] != "X" \
-                    and squareList[a[2]] != "O":
-                place = a[2]
-                return place
-            elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] != "X" \
-                    and squareList[a[2]] != "O":
-                place = a[2]
-                return place
-    else:
-        place = bot_random(squareList)
-        return place
-
-def bot_random(squareList):
-    while True:
-        place = random.randint(0, 8)
-        if squareList[place] != "X" and squareList[place] != "O":
-            return place
-        else:
-            continue
-
-
-def check_win(squareList):
-    winconditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [2, 4, 6], [0, 4, 8]]
-    for a in winconditions:
-        if len(a) == 3:
-            if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] == "X":
-                return 1
-            elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] == "O":
-                return 2
-            elif (squareList[0] != 1 and squareList[1] != 2 and squareList[2] != 3 and squareList[3] != 4
-                  and squareList[4] != 5 and squareList[5] != 6 and squareList[6] != 7
-                  and squareList[7] != 8 and squareList[8] != 9):
-                print(" " + os.linesep)
-                print(squareList[0])
-                return 3
-    else:
-        return 0
 
 
 squares = [1, 2, 3, 4, 5, 6, 7, 8, 9]
