@@ -1,10 +1,6 @@
 from tkinter import *
 import tkinter as tk
-import os
-import time
 import random
-import sys
-from tkinter.ttk import Separator, Style
 
 window = tk.Tk()
 window.title("Tic-Tac-Toe")
@@ -42,8 +38,8 @@ def check_win(squareList):
                 # Checks if tie
                 msg.set("It is a tie!")
                 return 3
-    else:
-        return 0
+            else:
+                return 0
 
 
 def bot_place(squareList):
