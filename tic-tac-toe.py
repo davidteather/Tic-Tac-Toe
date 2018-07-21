@@ -32,12 +32,16 @@ def check_win(squareList):
         if len(a) == 3:
             if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] == "X":
                 msg.set("You have won!")
+                return 1
             elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] == "O":
                 msg.set("The bot has won!")
+                return 2
             elif (squareList[0] != 1 and squareList[1] != 2 and squareList[2] != 3 and squareList[3] != 4
                   and squareList[4] != 5 and squareList[5] != 6 and squareList[6] != 7
                   and squareList[7] != 8 and squareList[8] != 9):
+                # Checks if tie
                 msg.set("It is a tie!")
+                return 3
     else:
         return 0
 
@@ -75,10 +79,13 @@ def bot_random(squareList):
 
 
 def usrPlace(event, arg, squareList):
+    # Ensures the tile the user clicked is open
     if squareList[arg] != "X" and squareList[arg] != "O":
+        # Sets clicked tile to the player
         squareList[arg] = "X"
         iswin = check_win(squareList)
         if iswin == 0:
+            # If there is no win call the bot place function
             place = bot_place(squareList)
             squareList[place] = "O"
             check_win(squareList)
@@ -99,7 +106,7 @@ def updateBoard(squareList):
     tile8.set(str(squareList[8]))
 
 
-
+# Updates board values before the labels are drawn
 updateBoard(squareList)
 Label(textvariable=msg, font=("Helvetica", 20)).grid(column=1, row=0, padx=15, pady=15)
 
@@ -141,3 +148,4 @@ t8.grid(column=2, row=3, padx=15, pady=15)
 
 
 window.mainloop()
+
