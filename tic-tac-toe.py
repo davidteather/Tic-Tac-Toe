@@ -21,7 +21,7 @@ tile6 = StringVar()
 tile7 = StringVar()
 tile8 = StringVar()
 msg = StringVar()
-msg.set("Hello")
+msg.set("Chose a square!")
 
 
 def check_win(squareList):
