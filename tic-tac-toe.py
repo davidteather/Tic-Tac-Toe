@@ -8,7 +8,7 @@ from tkinter.ttk import Separator, Style
 
 window = tk.Tk()
 window.title("Tic-Tac-Toe")
-#frame = Frame(window, width=200, height=250)
+
 squareList = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 tile0 = StringVar()
