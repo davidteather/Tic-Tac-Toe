@@ -25,21 +25,20 @@ def check_win(squareList):
     # Tiles that must be filled by one person to win
     winconditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [2, 4, 6], [0, 4, 8]]
     for a in winconditions:
-        if len(a) == 3:
-            if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] == "X":
-                msg.set("You have won!")
-                return 1
-            elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] == "O":
-                msg.set("The bot has won!")
-                return 2
-            elif (squareList[0] != 1 and squareList[1] != 2 and squareList[2] != 3 and squareList[3] != 4
-                  and squareList[4] != 5 and squareList[5] != 6 and squareList[6] != 7
-                  and squareList[7] != 8 and squareList[8] != 9):
-                # Checks if tie
-                msg.set("It is a tie!")
-                return 3
-            else:
-                return 0
+        if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] == "X":
+            msg.set("You have won!")
+            return 1
+        elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] == "O":
+            msg.set("The bot has won!")
+            return 2
+        elif (squareList[0] != 1 and squareList[1] != 2 and squareList[2] != 3 and squareList[3] != 4
+              and squareList[4] != 5 and squareList[5] != 6 and squareList[6] != 7
+              and squareList[7] != 8 and squareList[8] != 9):
+            # Checks if tie
+            msg.set("The game is a draw!")
+            return 3
+    else:
+        return 0
 
 
 def bot_place(squareList):
@@ -54,7 +53,11 @@ def bot_place(squareList):
                     and squareList[a[2]] != "O":
                 place = a[2]
                 return place
-            elif squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] != "X" \
+    # Different loop to 100% of the time favor the bot win
+    # As before in one loop it was favoring bot win for each move suggestion
+    for a in moveAI:
+        if len(a) == 3:
+            if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] != "X" \
                     and squareList[a[2]] != "O":
                 place = a[2]
                 return place
@@ -79,8 +82,7 @@ def usrPlace(event, arg, squareList):
     if squareList[arg] != "X" and squareList[arg] != "O":
         # Sets clicked tile to the player
         squareList[arg] = "X"
-        iswin = check_win(squareList)
-        if iswin == 0:
+        if check_win(squareList) == 0:
             # If there is no win call the bot place function
             place = bot_place(squareList)
             squareList[place] = "O"
@@ -107,39 +109,39 @@ updateBoard(squareList)
 Label(textvariable=msg, font=("Helvetica", 20)).grid(column=1, row=0, padx=15, pady=15)
 
 t0 = Label(textvariable=tile0, font=("Helvetica", 40))
-t0.bind("<Button-1>", lambda event, squareList=squareList, arg=0: usrPlace(event, arg, squareList))
+t0.bind("<Button-1>", lambda event, arg=0: usrPlace(event, arg, squareList))
 t0.grid(column=0, row=1, padx=15, pady=15)
 
 t1 = Label(textvariable=tile1, font=("Helvetica", 40))
-t1.bind("<Button-1>", lambda event, squareList=squareList, arg=1: usrPlace(event, arg, squareList))
+t1.bind("<Button-1>", lambda event, arg=1: usrPlace(event, arg, squareList))
 t1.grid(column=1, row=1, padx=15, pady=15)
 
 t2 = Label(textvariable=tile2, font=("Helvetica", 40))
-t2.bind("<Button-1>", lambda event, squareList=squareList, arg=2: usrPlace(event, arg, squareList))
+t2.bind("<Button-1>", lambda event, arg=2: usrPlace(event, arg, squareList))
 t2.grid(column=2, row=1, padx=15, pady=15)
 
 t3 = Label(textvariable=tile3, font=("Helvetica", 40))
-t3.bind("<Button-1>", lambda event, squareList=squareList, arg=3: usrPlace(event, arg, squareList))
+t3.bind("<Button-1>", lambda event, arg=3: usrPlace(event, arg, squareList))
 t3.grid(column=0, row=2, padx=15, pady=15)
 
 t4 = Label(textvariable=tile4, font=("Helvetica", 40))
-t4.bind("<Button-1>", lambda event, squareList=squareList, arg=4: usrPlace(event, arg, squareList))
+t4.bind("<Button-1>", lambda event, arg=4: usrPlace(event, arg, squareList))
 t4.grid(column=1, row=2, padx=15, pady=15)
 
 t5 = Label(textvariable=tile5, font=("Helvetica", 40))
-t5.bind("<Button-1>", lambda event, squareList=squareList, arg=5: usrPlace(event, arg, squareList))
+t5.bind("<Button-1>", lambda event, arg=5: usrPlace(event, arg, squareList))
 t5.grid(column=2, row=2, padx=15, pady=15)
 
 t6 = Label(textvariable=tile6, font=("Helvetica", 40))
-t6.bind("<Button-1>", lambda event, squareList=squareList, arg=6: usrPlace(event, arg, squareList))
+t6.bind("<Button-1>", lambda event, arg=6: usrPlace(event, arg, squareList))
 t6.grid(column=0, row=3, padx=15, pady=15)
 
 t7 = Label(textvariable=tile7, font=("Helvetica", 40))
-t7.bind("<Button-1>", lambda event, squareList=squareList, arg=7: usrPlace(event, arg, squareList))
+t7.bind("<Button-1>", lambda event, arg=7: usrPlace(event, arg, squareList))
 t7.grid(column=1, row=3, padx=15, pady=15)
 
 t8 = Label(textvariable=tile8, font=("Helvetica", 40))
-t8.bind("<Button-1>", lambda event, squareList=squareList, arg=8: usrPlace(event, arg, squareList))
+t8.bind("<Button-1>", lambda event, arg=8: usrPlace(event, arg, squareList))
 t8.grid(column=2, row=3, padx=15, pady=15)
 
 
