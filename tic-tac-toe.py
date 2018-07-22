@@ -1,11 +1,12 @@
 from tkinter import *
+from tkinter import messagebox
 import tkinter as tk
-import random
+import random, sys, time
 
 window = tk.Tk()
 window.title("Tic-Tac-Toe")
 
-squareList = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+square = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 tile0 = StringVar()
 tile1 = StringVar()
@@ -18,6 +19,18 @@ tile7 = StringVar()
 tile8 = StringVar()
 msg = StringVar()
 msg.set("Chose a square!")
+
+def AskReplay(mess):
+
+    replay = tk.messagebox.askyesno(str(mess), "Would you like to play again?", icon='question')
+    if replay == True:
+        return 1
+    elif replay == False:
+        time.sleep(0.5)
+        sys.exit()
+        return 0
+    else:
+        print ("There's no way you could have gotten this error, sorry.")
 
 
 def check_win(squareList):
@@ -82,12 +95,23 @@ def usrPlace(event, arg, squareList):
     if squareList[arg] != "X" and squareList[arg] != "O":
         # Sets clicked tile to the player
         squareList[arg] = "X"
-        if check_win(squareList) == 0:
+        updateBoard(squareList)
+        iswin = check_win(squareList)
+        if iswin == 0:
             # If there is no win call the bot place function
             place = bot_place(squareList)
             squareList[place] = "O"
-            check_win(squareList)
-        updateBoard(squareList)
+            iswin = check_win(squareList)
+            updateBoard(squareList)
+        if iswin != 0:
+            if AskReplay("The Game is Over!") == 1:
+                global square
+                square = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                time.sleep(1)
+                msg.set("Chose a square!")
+                updateBoard(square)
+            else:
+                print("You really shouldn't have gotten here.")
     else:
         msg.set("That tile is already taken.")
 
@@ -105,43 +129,43 @@ def updateBoard(squareList):
 
 
 # Updates board values before the labels are drawn
-updateBoard(squareList)
+updateBoard(square)
 Label(textvariable=msg, font=("Helvetica", 20)).grid(column=1, row=0, padx=15, pady=15)
 
 t0 = Label(textvariable=tile0, font=("Helvetica", 40))
-t0.bind("<Button-1>", lambda event, arg=0: usrPlace(event, arg, squareList))
+t0.bind("<Button-1>", lambda event, arg=0: usrPlace(event, arg, square))
 t0.grid(column=0, row=1, padx=15, pady=15)
 
 t1 = Label(textvariable=tile1, font=("Helvetica", 40))
-t1.bind("<Button-1>", lambda event, arg=1: usrPlace(event, arg, squareList))
+t1.bind("<Button-1>", lambda event, arg=1: usrPlace(event, arg, square))
 t1.grid(column=1, row=1, padx=15, pady=15)
 
 t2 = Label(textvariable=tile2, font=("Helvetica", 40))
-t2.bind("<Button-1>", lambda event, arg=2: usrPlace(event, arg, squareList))
+t2.bind("<Button-1>", lambda event, arg=2: usrPlace(event, arg, square))
 t2.grid(column=2, row=1, padx=15, pady=15)
 
 t3 = Label(textvariable=tile3, font=("Helvetica", 40))
-t3.bind("<Button-1>", lambda event, arg=3: usrPlace(event, arg, squareList))
+t3.bind("<Button-1>", lambda event, arg=3: usrPlace(event, arg, square))
 t3.grid(column=0, row=2, padx=15, pady=15)
 
 t4 = Label(textvariable=tile4, font=("Helvetica", 40))
-t4.bind("<Button-1>", lambda event, arg=4: usrPlace(event, arg, squareList))
+t4.bind("<Button-1>", lambda event, arg=4: usrPlace(event, arg, square))
 t4.grid(column=1, row=2, padx=15, pady=15)
 
 t5 = Label(textvariable=tile5, font=("Helvetica", 40))
-t5.bind("<Button-1>", lambda event, arg=5: usrPlace(event, arg, squareList))
+t5.bind("<Button-1>", lambda event, arg=5: usrPlace(event, arg, square))
 t5.grid(column=2, row=2, padx=15, pady=15)
 
 t6 = Label(textvariable=tile6, font=("Helvetica", 40))
-t6.bind("<Button-1>", lambda event, arg=6: usrPlace(event, arg, squareList))
+t6.bind("<Button-1>", lambda event, arg=6: usrPlace(event, arg, square))
 t6.grid(column=0, row=3, padx=15, pady=15)
 
 t7 = Label(textvariable=tile7, font=("Helvetica", 40))
-t7.bind("<Button-1>", lambda event, arg=7: usrPlace(event, arg, squareList))
+t7.bind("<Button-1>", lambda event, arg=7: usrPlace(event, arg, square))
 t7.grid(column=1, row=3, padx=15, pady=15)
 
 t8 = Label(textvariable=tile8, font=("Helvetica", 40))
-t8.bind("<Button-1>", lambda event, arg=8: usrPlace(event, arg, squareList))
+t8.bind("<Button-1>", lambda event, arg=8: usrPlace(event, arg, square))
 t8.grid(column=2, row=3, padx=15, pady=15)
 
 
