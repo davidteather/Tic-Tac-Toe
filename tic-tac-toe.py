@@ -1,7 +1,4 @@
-import os
-import time
-import random
-import sys
+import os, time, random, sys
 print("Python Tic-Tac-Toe" + os.linesep)
 print("GitHub: https://github.com/davidteather/Tic-Tac-Toe" + os.linesep)
 
@@ -40,6 +37,8 @@ def check_win(squareList):
                 return 3
     else:
         return 0
+
+
 def bot_place(squareList):
     # Function to deal with the bot AI
     # Bot Move suggestions ex: [0, 1, 2] means if tiles 0 and 1 are filled then the bot will go place at tile 2
@@ -48,14 +47,17 @@ def bot_place(squareList):
               [0, 6, 3], [1, 7, 4], [2, 8, 5], [0, 2, 1], [3, 5, 4], [6, 8, 7], [0, 8, 4], [2, 6, 4]]
     for a in moveAI:
         if len(a) == 3:
+            if squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] != "X" \
+                    and squareList[a[2]] != "O":
+                place = a[2]
+                return place
+    for a in moveAI:
+        if len(a) == 3:
             if squareList[a[0]] == "X" and squareList[a[1]] == "X" and squareList[a[2]] != "X" \
                     and squareList[a[2]] != "O":
                 place = a[2]
                 return place
-            elif squareList[a[0]] == "O" and squareList[a[1]] == "O" and squareList[a[2]] != "X" \
-                    and squareList[a[2]] != "O":
-                place = a[2]
-                return place
+
     else:
         # If no sequence is matched calls the bot random function
         place = bot_random(squareList)
@@ -102,7 +104,7 @@ def usr_placeinput(squareList):
                         # Asks if user would like to play again
                         val = input("Would you like to play again y | n" + os.linesep).lower()
                         if val == "y":
-                            print("Resetting..." +  os.linesep)
+                            print("Resetting..." + os.linesep)
                             time.sleep(1.5)
                             # Resets list to original value and reprints board
                             squareList = [1, 2, 3, 4, 5, 6, 7, 8, 9]
